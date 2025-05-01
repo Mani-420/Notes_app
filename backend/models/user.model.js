@@ -19,25 +19,19 @@ const userSchema = new Schema(
       lowecase: true,
       trim: true
     },
-    fullName: {
-      type: String,
-      required: true,
-      trim: true,
-      index: true
-    },
-    avatar: {
-      type: String, // cloudinary url
-      required: true
-    },
-    coverImage: {
-      type: String // cloudinary url
-    },
-    watchHistory: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Video'
-      }
-    ],
+    // fullName: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    //   index: true
+    // },
+    // avatar: {
+    //   type: String, // cloudinary url
+    //   required: true
+    // },
+    // coverImage: {
+    //   type: String // cloudinary url
+    // },
     password: {
       type: String,
       required: [true, 'Password is required']
@@ -67,8 +61,8 @@ userSchema.methods.generateAccessToken = function () {
     {
       id: this._id,
       email: this.email,
-      username: this.username,
-      fullName: this.fullName
+      username: this.username
+      // fullName: this.fullName
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -82,8 +76,8 @@ userSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
       email: this.email,
-      username: this.username,
-      fullName: this.fullName
+      username: this.username
+      // fullName: this.fullName
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
