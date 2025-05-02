@@ -14,9 +14,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Other Middlewares
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: '16kb' }));
+app.use(express.urlencoded({ limit: '16kb', extended: true }));
 app.use(express.static('public'));
 app.use(cookieParser());
+
+// Routes Import
+import userRoute from './routes/user.routes.js';
+
+// Routes Declaration
+app.use('/api/v1/users', userRoute);
 
 export { app };
