@@ -4,26 +4,19 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
-// Middleware to handle CORS and JSON parsing
-// Note: In a real-world application, you should not hardcode the CORS origin in your code.
+// CORS Middleware
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true, // Access-Control-Allow-Credentials: true
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-  })
-);
-
-app.use(express.json({ limit: '16kb' }));
-app.use(express.urlencoded({ extended: true, limit: '16kb' }));
+// Other Middlewares
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('public'));
 app.use(cookieParser());
-
-//Routes import
-
-import userRouter from './routes/user.routes.js';
-
-// Routes Declaration
-app.use('/api/v1/users', userRouter);
 
 export { app };
