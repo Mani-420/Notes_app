@@ -2,8 +2,8 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6 w-full max-w-sm border border-gray-700">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className=" text-white rounded-lg shadow-lg p-6 w-full max-w-sm border border-cyan-400">
         <h2 className="text-xl font-semibold mb-1">Sign up</h2>
         <p className="text-gray-400 text-sm mb-6">
           Fill in the form below to Login
@@ -20,7 +20,7 @@ const Login = () => {
             <input
               type="text"
               id="username"
-              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your username"
             />
           </div>
@@ -35,7 +35,7 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
             />
           </div>
