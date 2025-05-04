@@ -4,3 +4,51 @@
   font-family: 'Poppins', sans-serif;
   color-scheme: dark;
 }
+
+/* Add to your CSS file for better Quill editor styling in dark mode */
+.quill-editor .ql-container {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.quill-editor .ql-toolbar {
+  background: #2d3748;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border-color: #4a5568;
+}
+
+.quill-editor .ql-container {
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  border-color: #4a5568;
+  background: #1f2937;
+}
+
+.quill-editor .ql-editor {
+  font-size: 1rem;
+}
+
+.quill-editor .ql-stroke {
+  stroke: #e2e8f0;
+}
+
+.quill-editor .ql-fill {
+  fill: #e2e8f0;
+}
+
+.quill-editor .ql-picker {
+  color: #e2e8f0;
+}
+
+.quill-editor .ql-picker-options {
+  background-color: #2d3748;
+  border-color: #4a5568;
+}
+
+.quill-editor .ql-tooltip {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
