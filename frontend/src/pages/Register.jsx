@@ -1,60 +1,89 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6 w-full max-w-sm border border-cyan-400">
-        <h2 className="text-xl font-semibold mb-1">Sign up</h2>
-        <p className="text-gray-400 text-sm mb-6">
-          Fill in the form below to create an account
-        </p>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold">Create Account</h2>
+          <p className="text-gray-400 mt-1">Join Notes App today</p>
+        </div>
 
-        <form>
-          <div className="mb-4">
-            <label
-              className="block text-sm font-semibold mb-1"
-              htmlFor="username"
-            >
+        <form className="space-y-4">
+          <div>
+            <label htmlFor="username" className="block text-sm mb-1">
               Username
             </label>
             <input
-              type="text"
               id="username"
-              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your first name"
+              name="username"
+              type="text"
+              required
+              //   value={formData.username}
+              //   onChange={handleChange}
+              className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
 
-          <div className="mb-6">
-            <label
-              className="block text-sm font-semibold mb-1"
-              htmlFor="password"
-            >
+          <div>
+            <label htmlFor="email" className="block text-sm mb-1">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              //   value={formData.email}
+              //   onChange={handleChange}
+              className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm mb-1">
               Password
             </label>
             <input
-              type="password"
               id="password"
-              className="w-full px-3 py-2 rounded-md bg-gray-900 border border-cyan-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your last name"
+              name="password"
+              type="password"
+              required
+              //   value={formData.password}
+              //   onChange={handleChange}
+              className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
 
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              className="px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-md bg-white text-black font-medium hover:bg-gray-200 transition"
-            >
-              Sign up
-            </button>
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm mb-1">
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              //   value={formData.confirmPassword}
+              //   onChange={handleChange}
+              className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
+            />
           </div>
+
+          <button
+            type="submit"
+            className="w-full bg-cyan-600 py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors mt-2"
+          >
+            Sign Up
+          </button>
         </form>
+
+        <p className="mt-4 text-center text-sm text-gray-400">
+          Already have an account?{' '}
+          <Link to="/login" className="text-cyan-500 hover:underline">
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );
