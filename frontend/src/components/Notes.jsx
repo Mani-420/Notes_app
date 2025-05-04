@@ -1,35 +1,55 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Notes = () => {
+const NoteCard = ({ id, title, content, date, username, onEdit, onDelete }) => {
+  // Format the date (if provided)
+  const formattedDate = date ? new Date(date).toLocaleDateString() : '';
+
   return (
-    <div className="max-w-md w-full bg-gray-800 text-white rounded-xl p-6 shadow-lg border border-gray-700">
-      <div className="flex items-center space-x-4 mb-4">
-        <img
-          src="https://via.placeholder.com/60"
-          alt="Profile"
-          className="w-14 h-14 rounded-full border border-gray-600"
-        />
-        <div>
-          <h3 className="text-lg font-bold">Nate Foss</h3>
-          <p className="text-sm text-gray-400">@natefoss</p>
-        </div>
+    <div className="bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-700 hover:border-cyan-700 transition-all">
+      {/* Card Header with Title and Date */}
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="font-bold text-lg line-clamp-1">
+          {title || 'Untitled Note'}
+        </h3>
+        {date && <span className="text-xs text-gray-400">{formattedDate}</span>}
       </div>
 
-      <p className="text-gray-300 mb-6">
-        <span className="font-semibold text-white">Nate Foss</span> has
-        requested to join your team. You can approve or decline their request.
+      {/* Card Content */}
+      <p className="text-gray-300 mb-4 line-clamp-3">
+        {content || 'This note has no content.'}
       </p>
 
-      <div className="flex justify-end space-x-4">
-        <button className="bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded-md font-medium transition">
-          ❌ Decline
-        </button>
-        <button className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md font-medium transition">
-          ✅ Approve
-        </button>
+      {/* Card Footer */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <div className="h-6 w-6 bg-cyan-600 rounded-full flex items-center justify-center text-xs font-bold mr-2">
+            {username ? username[0].toUpperCase() : '?'}
+          </div>
+          <span className="text-sm text-gray-400">
+            {username || 'Anonymous'}
+          </span>
+        </div>
+
+        <div className="flex space-x-2">
+          <button
+            onClick={() => onDelete(id)}
+            className="text-white px-3 py-1 rounded-md font-medium transition hover:text-red-400"
+            aria-label="Delete note"
+          >
+            ❌ Delete
+          </button>
+          <button
+            onClick={() => onEdit(id)}
+            className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md font-medium transition"
+            aria-label="Edit note"
+          >
+            ✏️ Edit
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Notes;
+export default NoteCard;
