@@ -6,11 +6,13 @@ import Login from './pages/Login';
 import CreateNote from './pages/CreateNote';
 import EditNote from './pages/EditNote';
 import Navbar from './components/Navbar';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <Toaster />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
