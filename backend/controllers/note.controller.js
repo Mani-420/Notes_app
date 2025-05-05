@@ -1,7 +1,7 @@
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { ApiError } from '../utils/ApiError.js';
-import { Note } from '../models/note.model.js';
+import { Notes } from '../models/notes.model.js';
 
 const createNote = asyncHandler(async (req, res) => {
   const { title, content } = req.body;
