@@ -1,6 +1,36 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { post } from '../services/api.js';
 
 const Register = () => {
+  const [value, setValue] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const handleChange = (e) => {
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', value);
+    const request = await post('/v1/users/register', value);
+    const respose = request.data;
+    console.log('Response:', respose);
+    setValue({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -9,7 +39,7 @@ const Register = () => {
           <p className="text-gray-400 mt-1">Join Notes App today</p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username" className="block text-sm mb-1">
               Username
@@ -17,10 +47,12 @@ const Register = () => {
             <input
               id="username"
               name="username"
+              value={value.username}
+              plasceholder="Enter your username"
               type="text"
               required
               //   value={formData.username}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
@@ -33,9 +65,11 @@ const Register = () => {
               id="email"
               name="email"
               type="email"
+              value={value.email}
+              plasceholder="Enter your email"
               required
               //   value={formData.email}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
@@ -48,9 +82,11 @@ const Register = () => {
               id="password"
               name="password"
               type="password"
+              value={value.password}
+              plasceholder="Enter your password"
               required
               //   value={formData.password}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
@@ -62,10 +98,12 @@ const Register = () => {
             <input
               id="confirmPassword"
               name="confirmPassword"
+              value={value.confirmPassword}
+              plasceholder="Confirm your password"
               type="password"
               required
               //   value={formData.confirmPassword}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
