@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Notes = ({ id, title, content, date, username, onEdit, onDelete }) => {
+const Notes = ({ id, title, content, date, username }) => {
   // Format the date (if provided)
   const formattedDate = date ? new Date(date).toLocaleDateString() : '';
 
@@ -33,14 +33,14 @@ const Notes = ({ id, title, content, date, username, onEdit, onDelete }) => {
 
         <div className="flex space-x-2">
           <button
-            onClick={() => onDelete(id)}
+            // onClick={() => onDelete(id)}
             className="text-white px-3 py-1 rounded-md font-medium transition hover:text-red-400"
             aria-label="Delete note"
           >
             ❌ Delete
           </button>
           <button
-            onClick={() => onEdit(id)}
+            // onClick={() => onEdit(id)}
             className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md font-medium transition"
             aria-label="Edit note"
           >
