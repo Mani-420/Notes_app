@@ -7,9 +7,9 @@ const app = express();
 // CORS Middleware
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  credentials: true, // Access-Control-Allow-Credentials: true
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 
