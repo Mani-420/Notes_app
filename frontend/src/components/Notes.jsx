@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NoteCard = ({ id, title, content, date, username, onEdit, onDelete }) => {
+const Notes = ({ id, title, content, date, username, onEdit, onDelete }) => {
   // Format the date (if provided)
   const formattedDate = date ? new Date(date).toLocaleDateString() : '';
 
@@ -52,4 +52,4 @@ const NoteCard = ({ id, title, content, date, username, onEdit, onDelete }) => {
   );
 };
 
-export default NoteCard;
+export default Notes;
