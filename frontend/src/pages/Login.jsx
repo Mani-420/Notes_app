@@ -1,6 +1,40 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { post } from '../services/api.js';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [value, setValue] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await post('/api/v1/users/login', { email, password });
+
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        toast.success('Logged in successfully');
+        navigate('/');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (err) {
+      setError('Login failed');
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -9,7 +43,7 @@ const Login = () => {
           <p className="text-gray-400 mt-1">Welcome back to Notes App</p>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm mb-1">
               Email
@@ -18,9 +52,9 @@ const Login = () => {
               id="email"
               name="email"
               type="email"
+              value={value.email}
               required
-              //   value={formData.email}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>
@@ -33,9 +67,9 @@ const Login = () => {
               id="password"
               name="password"
               type="password"
+              value={value.password}
               required
-              //   value={formData.password}
-              //   onChange={handleChange}
+              onChange={handleChange}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
           </div>

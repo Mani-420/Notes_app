@@ -1,16 +1,28 @@
 // In your Home.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import Notes from '../components/Notes';
+import { get } from '../services/api';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const getNotes = async () => {
+      try {
+        const request = await get('/api/v1/notes/'); // Adjust the API endpoint as needed
+        const response = await request.data;
+        setNotes(response.notes); // Assuming the API returns an array of notes
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNotes();
+  });
 
   // Example notes - replace with your actual data and state management
-  const [notes, setNotes] = useState([
-    // Your notes array here
-  ]);
 
   // Handle editing a note
   const handleEdit = (id) => {
@@ -68,8 +80,6 @@ const Home = () => {
               content={note.content}
               date={note.date}
               username={note.username}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
             />
           ))}
         </div>

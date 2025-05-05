@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { post } from '../services/api'; // Import your API service
+import toast from 'react-hot-toast';
 
 const CreateNote = () => {
   const navigate = useNavigate();
@@ -25,15 +27,16 @@ const CreateNote = () => {
       setIsLoading(true);
       setError('');
 
-      // In a real app, you would make an API call here
-      // Example: await createNote({ title, content });
-      console.log('Creating note:', { title, content });
+      // Make the actual API call to create a note
+      const response = await post('/api/v1/notes/', { title, content });
 
-      // For now, simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Navigate back to home page after success
-      navigate('/');
+      // Check if the request was successful
+      if (response.data.success) {
+        toast.success('Note created successfully');
+        navigate('/'); // Navigate back to home page after success
+      } else {
+        setError(response.data.message || 'Failed to create note');
+      }
     } catch (err) {
       setError('Failed to create note. Please try again.');
       console.error(err);
@@ -63,6 +66,8 @@ const CreateNote = () => {
           <input
             id="title"
             type="text"
+            name="title"
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full rounded-md border border-gray-700 bg-gray-800 px-4 py-2.5 focus:border-cyan-600 focus:outline-none"
@@ -77,6 +82,8 @@ const CreateNote = () => {
           <textarea
             id="content"
             value={content}
+            name="content"
+            required
             onChange={(e) => setContent(e.target.value)}
             rows={10}
             className="w-full rounded-md border border-gray-700 bg-gray-800 px-4 py-2.5 focus:border-cyan-600 focus:outline-none"

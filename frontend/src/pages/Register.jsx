@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { post } from '../services/api.js';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const [value, setValue] = useState({
@@ -19,10 +20,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', value);
+    // console.log('Form submitted:', value);
     const request = await post('/v1/users/register', value);
-    const respose = request.data;
-    console.log('Response:', respose);
+    const response = request.data;
+    if (response.success) {
+      toast.success('User Registered Successfully');
+    }
+    // console.log('Response:', response);
     setValue({
       username: '',
       email: '',
