@@ -40,3 +40,18 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Add this to api.js after your interceptors
+instance.interceptors.request.use(
+  function (config) {
+    // Get token from localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);

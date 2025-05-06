@@ -18,18 +18,22 @@ const Login = () => {
     });
   };
 
+  // In Login.jsx handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await post('/api/v1/users/login', { email, password });
-
-      if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        toast.success('Logged in successfully');
+      const request = await post('/api/v1/users/login', value);
+      const response = request.data;
+      if (response.success) {
+        // Save token to localStorage
+        localStorage.setItem('token', response.token);
+        toast.success('Login successful');
         navigate('/');
+      } else {
+        toast.error(response.message || 'Login failed');
       }
     } catch (err) {
-      console.error('Login failed', err);
+      toast.error('An error occurred during login');
     }
   };
 

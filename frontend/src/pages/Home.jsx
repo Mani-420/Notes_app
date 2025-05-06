@@ -1,9 +1,10 @@
 // In your Home.jsx
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import Notes from '../components/Notes';
 import { get } from '../services/api';
+import toast from 'react-hot-toast';
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
@@ -11,15 +12,16 @@ const Home = () => {
   useEffect(() => {
     const getNotes = async () => {
       try {
-        const request = await get('/api/v1/notes/'); // Adjust the API endpoint as needed
-        const response = await request.data;
-        setNotes(response.notes); // Assuming the API returns an array of notes
+        const request = await get('/api/v1/notes/'); // Make sure trailing slash is included
+        const response = request.data;
+        setNotes(response.notes);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching notes:', error);
+        toast.error('Failed to load notes');
       }
     };
     getNotes();
-  });
+  }, []);
 
   // Empty state component
   const EmptyState = () => (

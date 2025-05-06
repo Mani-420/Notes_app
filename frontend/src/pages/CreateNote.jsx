@@ -10,36 +10,27 @@ const CreateNote = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Example for CreateNote.jsx
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!title.trim()) {
-      setError('Please provide a title for your note');
-      return;
-    }
-
-    if (!content.trim()) {
-      setError('Note content cannot be empty');
-      return;
-    }
 
     try {
       setIsLoading(true);
       setError('');
 
-      // Make the actual API call to create a note
-      const response = await post('/api/v1/notes/', { title, content });
+      // Make API call
+      const request = await post('/api/v1/notes/', { title, content });
+      const response = request.data;
 
-      // Check if the request was successful
-      if (response.data.success) {
-        toast.success('Note created successfully');
-        navigate('/'); // Navigate back to home page after success
+      if (response.success) {
+        toast.success('Note created successfully!');
+        navigate('/');
       } else {
-        setError(response.data.message || 'Failed to create note');
+        setError(response.message || 'Failed to create note');
       }
     } catch (err) {
-      setError('Failed to create note. Please try again.');
       console.error(err);
+      setError(err.response?.data?.message || 'An error occurred');
     } finally {
       setIsLoading(false);
     }

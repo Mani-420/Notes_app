@@ -1,16 +1,24 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// In ProtectedRoutes.jsx
+import React, { useEffect, useState } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-export default function ProtectedRoutes() {
-  const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
-  console.log(user);
+const ProtectedRoutes = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
     }
-  }, [user, navigate]);
+    setLoading(false);
+  }, []);
 
-  return <Outlet />;
-}
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+};
+
+export default ProtectedRoutes;
