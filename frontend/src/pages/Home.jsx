@@ -6,7 +6,6 @@ import Notes from '../components/Notes';
 import { get } from '../services/api';
 
 const Home = () => {
-  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -21,20 +20,6 @@ const Home = () => {
     };
     getNotes();
   });
-
-  // Example notes - replace with your actual data and state management
-
-  // Handle editing a note
-  const handleEdit = (id) => {
-    navigate(`/notes/${id}/edit`);
-  };
-
-  // Handle deleting a note
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this note?')) {
-      setNotes(notes.filter((note) => note.id !== id));
-    }
-  };
 
   // Empty state component
   const EmptyState = () => (

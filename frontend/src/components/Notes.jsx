@@ -1,9 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { del } from '../services/api';
+import toast from 'react-hot-toast';
 
 const Notes = ({ id, title, content, date, username }) => {
+  const navigate = useNavigate();
   // Format the date (if provided)
   const formattedDate = date ? new Date(date).toLocaleDateString() : '';
+  // Handle editing a note
+  const handleEdit = (id) => {
+    navigate(`/notes/${id}/edit`);
+  };
+
+  // Handle deleting a note
+  const handleDelete = async (id) => {
+    // if (window.confirm('Are you sure you want to delete this note?')) {
+    //   setNotes(notes.filter((note) => note.id !== id));
+    const request = await del(`/api/v1/notes/delete/${id}`);
+    const response = await request.data;
+    if (response.success) {
+      toast.success('Note deleted successfully!');
+    } else {
+      toast.error('Failed to delete note!');
+    }
+  };
 
   return (
     <div className="bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-700 hover:border-cyan-700 transition-all">
@@ -36,6 +57,7 @@ const Notes = ({ id, title, content, date, username }) => {
             // onClick={() => onDelete(id)}
             className="text-white px-3 py-1 rounded-md font-medium transition hover:text-red-400"
             aria-label="Delete note"
+            onClick={() => handleDelete(id)}
           >
             ❌ Delete
           </button>
@@ -43,6 +65,7 @@ const Notes = ({ id, title, content, date, username }) => {
             // onClick={() => onEdit(id)}
             className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md font-medium transition"
             aria-label="Edit note"
+            onClick={() => handleEdit(id)}
           >
             ✏️ Edit
           </button>
