@@ -7,6 +7,7 @@ import CreateNote from './pages/CreateNote';
 import EditNote from './pages/EditNote';
 import Navbar from './components/Navbar';
 import { Toaster } from 'react-hot-toast';
+import ProtectedRoutes from './routes/ProtectedRoutes';
 
 function App() {
   return (
@@ -15,13 +16,14 @@ function App() {
         <Toaster />
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<ProtectedRoutes />}>
+            <Route index element={<Home />}></Route>
+            <Route path="/create-note" element={<CreateNote />} />
+            <Route path="/notes/:id/edit" element={<EditNote />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/create-note" element={<CreateNote />} />
-          <Route path="/notes/:id/edit" element={<EditNote />} />
         </Routes>
-        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );
