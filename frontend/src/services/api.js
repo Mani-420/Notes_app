@@ -20,6 +20,12 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
 // Handle token expiration
 instance.interceptors.response.use(
   (response) => response,
