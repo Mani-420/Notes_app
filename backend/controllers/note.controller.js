@@ -9,7 +9,7 @@ const createNote = asyncHandler(async (req, res) => {
     throw new ApiError('Please provide all required fields', 400);
   }
 
-  const note = await Note.create({
+  const note = await Notes.create({
     title,
     content,
     userId: req.user._id
@@ -17,7 +17,7 @@ const createNote = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, note, 'Note created successfully'));
+    .json(new ApiResponse(200, note, 'sNotes created successfully'));
 });
 
 const editNote = asyncHandler(async (req, res) => {
@@ -26,7 +26,7 @@ const editNote = asyncHandler(async (req, res) => {
     throw new ApiError('Please provide all required fields', 400);
   }
 
-  const note = await Note.findById(req.params.id);
+  const note = await Notess.findById(req.params.id);
 
   if (!note) {
     throw new ApiError('Note not found', 404);
@@ -46,7 +46,7 @@ const editNote = asyncHandler(async (req, res) => {
 });
 
 const deleteNote = asyncHandler(async (req, res) => {
-  const note = await Note.findById(req.params.id);
+  const note = await Notes.findById(req.params.id);
 
   if (!note) {
     throw new ApiError('Note not found', 404);
@@ -64,7 +64,7 @@ const deleteNote = asyncHandler(async (req, res) => {
 });
 
 const getAllNotes = asyncHandler(async (req, res) => {
-  const notes = await Note.find({ userId: req.user._id }).sort({
+  const notes = await Notes.find({ user: req.user._id }).sort({
     createdAt: -1
   });
 
