@@ -1,7 +1,7 @@
 // src/pages/EditNote.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateNote } from '../services/notesService';
+import { getNoteById, updateNote } from '../services/notesService';
 import toast from 'react-hot-toast';
 import Loader from '../components/common/Loader';
 
