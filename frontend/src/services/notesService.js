@@ -6,19 +6,22 @@ export const getAllNotes = async () => {
   return response.data;
 };
 
-// Add this function
+// ...existing code...
 export const getNoteById = async (id) => {
   const response = await get(`/api/v1/notes/${id}`);
   return response.data;
 };
 
-export const getSingleNote = async (id) => {
-  const response = await get(`/api/v1/notes/${id}`);
-  return response.data;
-};
+// ...existing code...
+
+// Add this function
+// export const getSingleNote = async (id) => {
+//   const response = await get(`/api/v1/notes/${id}`);
+//   return response.data;
+// };
 
 export const createNote = async (noteData) => {
-  const response = await post('/api/v1/notes/', noteData);
+  const response = await post('/api/v1/notes/create-note', noteData);
   return response.data;
 };
 
