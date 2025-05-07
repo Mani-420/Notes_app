@@ -26,7 +26,7 @@ const editNote = asyncHandler(async (req, res) => {
     throw new ApiError('Please provide all required fields', 400);
   }
 
-  const note = await Notess.findById(req.params.id);
+  const note = await Notes.findById(req.params.id);
 
   if (!note) {
     throw new ApiError('Note not found', 404);
@@ -64,7 +64,7 @@ const deleteNote = asyncHandler(async (req, res) => {
 });
 
 const getAllNotes = asyncHandler(async (req, res) => {
-  const notes = await Notes.find({ user: req.user._id }).sort({
+  const notes = await Notes.find({ userId: req.user._id }).sort({
     createdAt: -1
   });
 
