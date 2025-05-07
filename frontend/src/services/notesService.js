@@ -6,6 +6,12 @@ export const getAllNotes = async () => {
   return response.data;
 };
 
+// Add this function
+export const getNoteById = async (id) => {
+  const response = await get(`/api/v1/notes/${id}`);
+  return response.data;
+};
+
 export const getSingleNote = async (id) => {
   const response = await get(`/api/v1/notes/${id}`);
   return response.data;

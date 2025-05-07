@@ -81,7 +81,7 @@ const Login = () => {
             disabled={isLoading}
             className="w-full bg-cyan-600 hover:bg-cyan-700 py-2.5 rounded-md font-medium transition disabled:opacity-70"
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? 'Logging in...' : 'Log In'}
           </button>
         </form>
 
