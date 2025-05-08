@@ -3,7 +3,6 @@ import { ApiResponse } from '../utils/ApiResponse.js';
 import { ApiError } from '../utils/ApiError.js';
 import { User } from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
@@ -222,11 +221,26 @@ const isLoggedIn = asyncHandler(async (req, res) => {
   }
 });
 
+const getCurrentUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select(
+    '-password -refreshToken'
+  );
+
+  if (!user) {
+    throw new ApiError('User not found', 404);
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, 'User fetched successfully'));
+});
+
 export {
   registerUser,
   loginUser,
   logoutUser,
   isLoggedIn,
   refreshAccessToken,
-  changeCurrentPassword
+  changeCurrentPassword,
+  getCurrentUser
 };
