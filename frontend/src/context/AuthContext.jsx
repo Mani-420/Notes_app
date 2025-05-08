@@ -1,51 +1,62 @@
-// src/context/AuthContext.jsx
-import React, { createContext, useState, useEffect } from 'react';
-import { login, register, logout } from '../services/authService';
+// src/context/AuthContext.js
+import { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
+// Create the context
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+// AuthProvider component
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null); // Logged-in user data
   const [loading, setLoading] = useState(true);
 
+  // Check if token is in localStorage on first load
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Validate token or get user info
-      // For now, just set that we have a user
-      setCurrentUser(true);
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUser(storedUser);
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${storedUser.token}`;
     }
     setLoading(false);
   }, []);
 
-  const handleLogin = async (credentials) => {
-    const data = await login(credentials);
-    localStorage.setItem('token', data.token);
-    setCurrentUser(data.user);
-    return data;
+  // Login function
+  const login = async (email, password) => {
+    const res = await axios.post('http://localhost:5000/api/users/login', {
+      email,
+      password
+    });
+    setUser(res.data);
+    localStorage.setItem('user', JSON.stringify(res.data));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
   };
 
-  const handleRegister = async (userData) => {
-    const data = await register(userData);
-    localStorage.setItem('token', data.token);
-    setCurrentUser(data.user);
-    return data;
+  // Register function
+  const register = async (name, email, password) => {
+    const res = await axios.post('http://localhost:5000/api/users/register', {
+      name,
+      email,
+      password
+    });
+    setUser(res.data);
+    localStorage.setItem('user', JSON.stringify(res.data));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setCurrentUser(null);
-    logout();
+  // Logout function
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+    delete axios.defaults.headers.common['Authorization'];
   };
 
-  const value = {
-    currentUser,
-    loading,
-    login: handleLogin,
-    register: handleRegister,
-    logout: handleLogout,
-    isAuthenticated: !!currentUser
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
+
+export default AuthProvider;
