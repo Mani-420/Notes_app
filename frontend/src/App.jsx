@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/navbar/Navbar';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
-function App() {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <h1>Welcome to Notes App</h1>
-    </>
-  );
-}
+const App = () => {
+  return <div>This is App</div>;
+};
 
 export default App;
