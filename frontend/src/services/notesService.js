@@ -12,14 +12,6 @@ export const getNoteById = async (id) => {
   return response.data;
 };
 
-// ...existing code...
-
-// Add this function
-// export const getSingleNote = async (id) => {
-//   const response = await get(`/api/v1/notes/${id}`);
-//   return response.data;
-// };
-
 export const createNote = async (noteData) => {
   const response = await post('/api/v1/notes/create-note', noteData);
   return response.data;
