@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import CreateNote from './pages/CreateNote';
 import EditNote from './pages/EditNote';
 import ProtectedRoute from './routes/ProtectedRoute';
+import NoteDetails from './pages/NoteDetails';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/create-note" element={<CreateNote />} />
               <Route path="/notes/:id/edit" element={<EditNote />} />
+              <Route path="/notes/:id" element={<NoteDetails />} />
             </Route>
           </Routes>
         </div>
