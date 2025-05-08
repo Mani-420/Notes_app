@@ -63,6 +63,22 @@ const deleteNote = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, 'Note deleted successfully'));
 });
 
+const singleNote = asyncHandler(async (req, res) => {
+  const note = await Notes.findById(req.params.id);
+
+  if (!note) {
+    throw new ApiError('Note not found', 404);
+  }
+
+  if (note.userId.toString() !== req.user._id.toString()) {
+    throw new ApiError('Unauthorized: You cannot view this note', 403);
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, note, 'Note fetched successfully'));
+});
+
 const getAllNotes = asyncHandler(async (req, res) => {
   const notes = await Notes.find({ userId: req.user._id }).sort({
     createdAt: -1
@@ -73,4 +89,4 @@ const getAllNotes = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, notes, 'Notes fetched successfully'));
 });
 
-export { createNote, editNote, deleteNote, getAllNotes };
+export { createNote, editNote, deleteNote, singleNote, getAllNotes };
