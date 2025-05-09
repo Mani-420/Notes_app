@@ -1,5 +1,5 @@
 // In your Home.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NoteCard from '../../components/Cards/NoteCard';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
