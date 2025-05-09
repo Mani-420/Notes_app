@@ -56,8 +56,7 @@ const deleteNote = asyncHandler(async (req, res) => {
     throw new ApiError('Unauthorized: You cannot delete this note', 403);
   }
 
-  await note.remove();
-
+  await Notes.findByIdAndDelete(req.params.id);
   return res
     .status(200)
     .json(new ApiResponse(200, null, 'Note deleted successfully'));
