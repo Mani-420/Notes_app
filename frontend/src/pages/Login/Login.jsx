@@ -1,15 +1,28 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { validateEmail } from '../../utils/helper.js';
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Logging in with:', { email, password });
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!password) {
+      setError('Please enter the password');
+      return;
+    }
+
+    setError('');
     navigate('/');
   };
 
@@ -31,6 +44,7 @@ const Login = () => {
               name="email"
               type="email"
               value={email}
+              placeholder="enter email"
               required
               onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
@@ -38,25 +52,41 @@ const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm mb-1">
+            <label
+              htmlFor="password"
+              className="text-sm mb-1 flex items-center"
+            >
               Password
             </label>
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="enter password"
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 focus:border-cyan-600 focus:outline-none"
             />
+            <div className="flex items-center mt-2">
+              <input
+                type="checkbox"
+                id="showPassword"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+                className="mr-2"
+              />
+              <label htmlFor="showPassword" className="text-sm">
+                Show Password
+              </label>
+            </div>
           </div>
-
+          {error && <p className="text-red-500 text-sm pb-1">{error}</p>}
           <button
             type="submit"
             className="w-full bg-cyan-600 py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors mt-2"
           >
-            Sign In
+            Log In
           </button>
         </form>
 
