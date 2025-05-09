@@ -11,8 +11,8 @@ import { verifyJWT } from '../middlewares/auth.middleware.js';
 const router = Router();
 
 // Secure routes with JWT middleware
-router.route('/create-note').post(verifyJWT, createNote);
 router.route('/').get(verifyJWT, getAllNotes);
+router.route('/create-note').post(verifyJWT, createNote);
 router.route('/:id').get(verifyJWT, singleNote);
 router.route('/edit/:id').put(verifyJWT, editNote);
 router.route('/delete/:id').delete(verifyJWT, deleteNote);
