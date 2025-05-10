@@ -1,16 +1,44 @@
 // In your Home.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NoteCard from '../../components/Cards/NoteCard';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
+  const currentUser = useSelector((state) => state.auth);
+  const userData = useSelector((state) => state.auth.userData);
+  const userId = userData?.userId;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser.status) {
+      navigate('/login');
+    }
+
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/notes/`, {
+          withCredentials: true
+        });
+        if (response.status === 200) {
+          const notesData = response.data.data?.notes || response.data.notes;
+          setNotes(notesData);
+        }
+      } catch (error) {
+        console.error('Error fetching notes:', error);
+      }
+    };
+    fetchNotes();
+  }, [currentUser.status, navigate]);
 
   // Empty state component
   const EmptyState = () => (
     <div className="text-center py-16 px-4">
-      <h2 className="text-xl font-semibold mb-2">No notes yet</h2>
+      <h2 className="text-xl text-black font-semibold mb-2">No notes yet</h2>
       <p className="text-gray-400 mb-6">
         Create your first note to get started
       </p>
@@ -41,18 +69,22 @@ const Home = () => {
       </Link>
 
       {/* Notes Grid with Empty State Handling */}
-      {notes.length == 0 ? (
+      {notes && notes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <NoteCard
-            title={'Meeting Notes'}
-            content={'Discuss project updates and next steps.'}
-            onView={(note) => console.log('Viewing note:', note)}
-            onEdit={(note) => console.log('Editing note:', note)}
-            onDelete={(noteId) => console.log('Deleting note:', noteId)}
-          />
+          {notes.map((note) => (
+            <NoteCard
+              key={note._id}
+              title={note.title}
+              content={note.content}
+              date={note.createdAt}
+              onView={() => handleViewNote(note)}
+              onEdit={() => handleEditNote(note)}
+              onDelete={() => handleDeleteNote(note._id)}
+            />
+          ))}
         </div>
       ) : (
-        <div className="bg-gray-800 border border-gray-700 rounded-lg">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg">
           <EmptyState />
         </div>
       )}
