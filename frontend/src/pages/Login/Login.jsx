@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/helper.js';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/userSlice/authSlice.js';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,7 +13,9 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
@@ -23,7 +28,31 @@ const Login = () => {
     }
 
     setError('');
-    navigate('/');
+
+    // login api
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/users/login',
+        {
+          email,
+          password
+        },
+        {
+          withCredentials: true
+        }
+      );
+
+      if (response.status === 200) {
+        const userData =
+          response.data.data?.user || response.data.userData || response.data;
+        dispatch(login({ userData }));
+        navigate('/');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('An error occurred while logging in. Please try again.');
+    }
   };
 
   return (
