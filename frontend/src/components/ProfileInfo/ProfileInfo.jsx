@@ -1,3 +1,5 @@
+// Profile Info Component
+
 import React from 'react';
 import { getInitials } from '../../utils/helper.js';
 
