@@ -1,16 +1,16 @@
 import React from 'react';
 import { getInitials } from '../../utils/helper.js';
 
-const ProfileInfo = ({ onLogout }) => {
+const ProfileInfo = ({ onLogout, userData }) => {
   return (
     <div>
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 flex items-center justify-center rounded-full text-slate-950 font-medium bg-slate-100">
-          {getInitials('Mithu Gambler')}
+          {getInitials(userData?.username)}
         </div>
 
         <div>
-          <p className="text-sm font-medium">Username</p>
+          <p className="text-sm font-medium">{userData?.username}</p>
         </div>
 
         <button
