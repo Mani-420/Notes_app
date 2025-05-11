@@ -6,11 +6,11 @@ const ProfileInfo = ({ onLogout, userData }) => {
     <div>
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 flex items-center justify-center rounded-full text-slate-950 font-medium bg-slate-100">
-          {getInitials(userData?.username)}
+          {getInitials(userData?.name)}
         </div>
 
         <div>
-          <p className="text-sm font-medium">{userData?.username}</p>
+          <p className="text-sm font-medium">{userData?.name}</p>
         </div>
 
         <button
