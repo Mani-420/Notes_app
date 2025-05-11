@@ -2,14 +2,19 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/helper.js';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/userSlice/authSlice';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,15 +23,43 @@ const Signup = () => {
       return;
     }
 
-    if (!password && !username) {
+    if (!password || !username) {
       setError('Please enter all the fields');
       return;
     }
 
     setError('');
-    navigate('/');
-  };
+    setIsLoading(true);
 
+    // signup api
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/users/register',
+        {
+          username,
+          email,
+          password
+        },
+        {
+          withCredentials: true
+        }
+      );
+
+      if (response.status === 201) {
+        const userData =
+          response.data.data?.user || response.data.userData || response.data;
+        dispatch(login({ userData }));
+        navigate('/login');
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message || 'Registration failed. Please try again.'
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -100,9 +133,10 @@ const Signup = () => {
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full bg-cyan-600 py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors mt-2"
           >
-            Sign Up
+            {isLoading ? 'Signing Up...' : 'Sign Up'}
           </button>
         </form>
 

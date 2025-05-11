@@ -1,35 +1,67 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const EditNote = () => {
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [note, setNote] = useState({ title: '', content: '' });
+  const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState('');
+  // Fetch the note data
+  useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/notes/${id}`,
+          {
+            withCredentials: true
+          }
+        );
+        setNote(response.data.message || { title: '', content: '' });
+      } catch (error) {
+        console.error('Error fetching note:', error);
+        setError('Failed to load note data');
+      } finally {
+        setIsLoading(false); // Set loading to false when done
+      }
+    };
+
+    fetchNote();
+  }, [id, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title.trim() && !content.trim()) {
-      setError('Please fill in all fields');
+    if (!note.title || !note.content) {
+      setError('Title and content are required');
       return;
     }
 
+    setIsSaving(true);
     try {
-      setIsSaving(true);
-      setError('');
-
-      // Navigate back to home page after success
+      await axios.put(
+        `http://localhost:8080/api/notes/edit/${id}`,
+        { title: note.title, content: note.content },
+        { withCredentials: true }
+      );
       navigate('/');
-    } catch (err) {
+    } catch (error) {
+      console.error('Error updating note:', error);
       setError('Failed to update note. Please try again.');
-      console.error(err);
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNote((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   if (isLoading) {
@@ -61,9 +93,10 @@ const EditNote = () => {
           </label>
           <input
             id="title"
+            name="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={note.title}
+            onChange={handleChange}
             className="w-full rounded-md border border-gray-700 bg-gray-800 px-4 py-2.5 focus:border-cyan-600 focus:outline-none"
             placeholder="Note title"
           />
@@ -75,8 +108,9 @@ const EditNote = () => {
           </label>
           <textarea
             id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name="content"
+            value={note.content}
+            onChange={handleChange}
             rows={10}
             className="w-full rounded-md border border-gray-700 bg-gray-800 px-4 py-2.5 focus:border-cyan-600 focus:outline-none"
             placeholder="Write your note here..."

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CreateNote = () => {
   const navigate = useNavigate();
@@ -8,12 +9,41 @@ const CreateNote = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Example for CreateNote.jsx
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title || !content) {
       setError('Please fill in all fields');
       return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError('');
+
+      // Use axios instead of fetch for consistency
+      const response = await axios.post(
+        'http://localhost:8080/api/notes/create-note', // Use the base notes endpoint
+        { title, content },
+        {
+          withCredentials: true, // Include credentials for authentication
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.status === 201 || response.status === 200) {
+        navigate('/');
+      }
+    } catch (err) {
+      console.error('Error creating note:', err);
+      // Handle API error message
+      setError(
+        err.response?.data?.message ||
+          'An error occurred while creating the note. Please try again.'
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 

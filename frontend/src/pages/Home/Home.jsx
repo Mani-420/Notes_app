@@ -4,7 +4,7 @@ import NoteCard from '../../components/Cards/NoteCard';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const Home = () => {
@@ -13,19 +13,26 @@ const Home = () => {
   const userData = useSelector((state) => state.auth.userData);
   const userId = userData?.userId;
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!currentUser.status) {
+    if (!currentUser.status || !currentUser) {
       navigate('/login');
+      return;
     }
 
     const fetchNotes = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/notes/`, {
-          withCredentials: true
+        console.log('Fetching notes...');
+        const response = await axios.get('http://localhost:8080/api/notes/', {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
         if (response.status === 200) {
-          const notesData = response.data.data?.notes || response.data.notes;
+          console.log('Notes response:', response.data);
+          const notesData = response.data.message || [];
           setNotes(notesData);
         }
       } catch (error) {
@@ -33,7 +40,27 @@ const Home = () => {
       }
     };
     fetchNotes();
-  }, [currentUser.status, navigate]);
+  }, [currentUser.status, navigate, location.key]); // Add location.key here
+
+  const handleViewNote = (note) => {
+    navigate(`/notes/${note._id}`);
+  };
+
+  const handleEditNote = async (note) => {
+    navigate(`/notes/edit/${note._id}`);
+  };
+
+  const handleDeleteNote = async (noteId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/notes/delete/${noteId}`, {
+        withCredentials: true
+      });
+      // Remove note from state after successful deletion
+      setNotes(notes.filter((note) => note._id !== noteId));
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    }
+  };
 
   // Empty state component
   const EmptyState = () => (
@@ -71,7 +98,7 @@ const Home = () => {
       {/* Notes Grid with Empty State Handling */}
       {notes && notes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {notes.map((note) => (
+          {notes.map((note, index) => (
             <NoteCard
               key={note._id}
               title={note.title}
