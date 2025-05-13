@@ -5,6 +5,7 @@ import { validateEmail } from '../../utils/helper.js';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/userSlice/authSlice.js';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,11 +48,13 @@ const Login = () => {
         const userData =
           response.data.data?.user || response.data.userData || response.data;
         dispatch(login({ userData }));
+        toast.success('Login successful');
         navigate('/');
       }
     } catch (err) {
       console.error(err);
       setError('An error occurred while logging in. Please try again.');
+      toast.error('Login failed. Please check your credentials.');
     }
   };
 

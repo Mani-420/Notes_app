@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const EditNote = () => {
   const { id } = useParams();
@@ -47,10 +48,12 @@ const EditNote = () => {
         { title: note.title, content: note.content },
         { withCredentials: true }
       );
+      toast.success('Note updated successfully');
       navigate('/');
     } catch (error) {
       console.error('Error updating note:', error);
       setError('Failed to update note. Please try again.');
+      toast.error('Failed to update note. Please try again.');
     } finally {
       setIsSaving(false);
     }

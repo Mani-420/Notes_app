@@ -5,6 +5,7 @@ import { validateEmail } from '../../utils/helper.js';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/userSlice/authSlice';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -49,11 +50,15 @@ const Signup = () => {
         const userData =
           response.data.data?.user || response.data.userData || response.data;
         dispatch(login({ userData }));
+        toast.success('Registration successful');
         navigate('/login');
       }
     } catch (err) {
       console.error(err);
       setError(
+        err.response?.data?.message || 'Registration failed. Please try again.'
+      );
+      toast.error(
         err.response?.data?.message || 'Registration failed. Please try again.'
       );
     } finally {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CreateNote = () => {
   const navigate = useNavigate();
@@ -33,10 +34,12 @@ const CreateNote = () => {
       );
 
       if (response.status === 201 || response.status === 200) {
+        toast.success('Note created successfully');
         navigate('/');
       }
     } catch (err) {
       console.error('Error creating note:', err);
+      toast.error('Failed to create note. Please try again.');
       // Handle API error message
       setError(
         err.response?.data?.message ||
