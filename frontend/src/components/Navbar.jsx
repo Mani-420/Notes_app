@@ -7,6 +7,7 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/userSlice/authSlice';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // Simplified Navbar
 const Navbar = () => {
@@ -25,7 +26,13 @@ const Navbar = () => {
           withCredentials: true
         }
       );
+      if (response.status === false) {
+        console.error('Logout failed', response.data);
+        toast.error('Logout failed');
+        return;
+      }
       if (response.status === 200) {
+        toast.success('Logout successful');
         dispatch(logout());
         navigate('/login');
       }
