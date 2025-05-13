@@ -6,6 +6,7 @@ import { Plus } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
@@ -57,8 +58,10 @@ const Home = () => {
       });
       // Remove note from state after successful deletion
       setNotes(notes.filter((note) => note._id !== noteId));
+      toast.success('Note deleted successfully');
     } catch (error) {
       console.error('Error deleting note:', error);
+      toast.error('Failed to delete note. Please try again.');
     }
   };
 
