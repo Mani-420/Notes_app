@@ -22,7 +22,7 @@ const App = () => {
         <Route path="/notes/edit/:id" element={<EditNote />} />
       </Routes>
       <ToastContainer
-        position="top-right"
+        position="top-center"
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
