@@ -29,11 +29,14 @@ const editNote = asyncHandler(async (req, res) => {
   const note = await Notes.findById(req.params.id);
 
   if (!note) {
-    throw new ApiError('Note not found', 404);
+    return res.status(404).json({ success: false, message: 'Note not found' });
   }
 
   if (note.userId.toString() !== req.user._id.toString()) {
-    throw new ApiError('Unauthorized: You cannot edit this note', 403);
+    return res.status(403).json({
+      success: false,
+      message: 'Unauthorized: You cannot edit this note'
+    });
   }
 
   note.title = title;
@@ -49,11 +52,16 @@ const deleteNote = asyncHandler(async (req, res) => {
   const note = await Notes.findById(req.params.id);
 
   if (!note) {
-    throw new ApiError('Note not found', 404);
+    return res.status(404).json({ success: false, message: 'Note not found' });
   }
 
   if (note.userId.toString() !== req.user._id.toString()) {
-    throw new ApiError('Unauthorized: You cannot delete this note', 403);
+    return res
+      .status(403)
+      .json({
+        success: false,
+        message: 'Unauthorized: You cannot delete this note'
+      });
   }
 
   await Notes.findByIdAndDelete(req.params.id);
@@ -70,7 +78,10 @@ const singleNote = asyncHandler(async (req, res) => {
   }
 
   if (note.userId.toString() !== req.user._id.toString()) {
-    throw new ApiError('Unauthorized: You cannot view this note', 403);
+    return res.status(403).json({
+      success: false,
+      message: 'Unauthorized: You cannot view this note'
+    });
   }
 
   return res
