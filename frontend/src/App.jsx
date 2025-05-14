@@ -7,6 +7,7 @@ import CreateNote from './pages/AddNotes/CreateNote.jsx';
 import EditNote from './pages/EditNotes/EditNote.jsx';
 import ViewNote from './pages/ViewNote/ViewNote.jsx';
 import { ToastContainer } from 'react-toastify';
+import NotFound from './pages/NotFound/NotFound.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/create-note" element={<CreateNote />} />
         <Route path="/notes/:id" element={<ViewNote />} />
         <Route path="/notes/edit/:id" element={<EditNote />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer
         position="top-center"
