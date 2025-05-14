@@ -27,4 +27,12 @@ import noteRoute from './routes/note.routes.js';
 app.use('/api/users', userRoute);
 app.use('/api/notes', noteRoute);
 
+// 404 handler for unknown API routes
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: 'API route not found'
+  });
+});
+
 export { app };
