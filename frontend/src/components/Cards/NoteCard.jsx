@@ -1,3 +1,5 @@
+// Card Component
+
 import React, { useState } from 'react';
 import { FiTrash2, FiEdit, FiEye } from 'react-icons/fi';
 import moment from 'moment';

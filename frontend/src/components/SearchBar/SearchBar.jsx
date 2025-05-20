@@ -1,3 +1,5 @@
+// Search Bar Component
+
 import React from 'react';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
