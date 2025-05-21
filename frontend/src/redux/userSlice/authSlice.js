@@ -1,3 +1,5 @@
+// Auth Slice
+
 import { createSlice } from '@reduxjs/toolkit';
 
 // Define the initial state for the auth slice
