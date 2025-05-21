@@ -1,3 +1,5 @@
+// Store configuration for Redux with persistence
+
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authSlice from './userSlice/authSlice.js';
 import noteSlice from './noteSlice/noteSlice.js';
