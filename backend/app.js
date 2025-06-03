@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { errorHandler } from './utils/ErrorHandler.js';
 
 const app = express();
 
@@ -34,5 +35,7 @@ app.use((req, res, next) => {
     message: 'API route not found'
   });
 });
+
+app.use(errorHandler);
 
 export { app };
