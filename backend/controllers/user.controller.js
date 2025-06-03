@@ -100,20 +100,19 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $unset: { refreshToken: 1 }
-    },
-    {
-      new: true
-    }
-  );
-
   const options = {
     httpOnly: true,
     secure: true
   };
+
+  // Optionally, try to unset refreshToken if user is logged in
+  if (req.user && req.user._id) {
+    await User.findByIdAndUpdate(
+      req.user._id,
+      { $unset: { refreshToken: 1 } },
+      { new: true }
+    );
+  }
 
   return res
     .status(200)
