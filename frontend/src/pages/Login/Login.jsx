@@ -1,4 +1,4 @@
-// Login Page 
+// Login Page
 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -54,7 +54,6 @@ const Login = () => {
         navigate('/');
       }
     } catch (err) {
-      console.error(err);
       setError('An error occurred while logging in. Please try again.');
       toast.error('Login failed. Please check your credentials.');
     }
