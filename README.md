@@ -1,5 +1,11 @@
 # 📝 Notes App - Full Stack MERN Application
 
+## Demo Video:
+
+https://github.com/user-attachments/assets/62022e40-1096-46f2-b3a3-89f230318aae
+
+## Description:
+
 A modern, responsive notes management application built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Create, edit, view, and delete your notes with a clean and intuitive interface.
 
 ## 🌟 Features
@@ -36,41 +42,13 @@ A modern, responsive notes management application built with the MERN stack (Mon
 
 ## 📸 Screenshots
 
-### Home Page
-
-![Home Page](./screenshots/home.png)
-_Clean and organized notes dashboard_
-
-### Login Page
-
-![Login Page](./screenshots/login.png)
-_Secure user authentication_
-
-### Create Note
-
-![Create Note](./screenshots/create-note.png)
-_Easy note creation interface_
-
-### Edit Note
-
-![Edit Note](./screenshots/edit-note.png)
-_Seamless note editing experience_
-
-### View Note
-
-![View Note](./screenshots/view-note.png)
-_Full note reading view_
-
-### Mobile Responsive
-
-![Mobile View](./screenshots/mobile.png)
-_Optimized for mobile devices_
-
-## 🎥 Demo Video
-
-https://github.com/user-attachments/assets/your-video-id-here
-
-_Watch the full demo of the Notes App in action_
+![Image](https://github.com/user-attachments/assets/2b66ffca-fe4b-4fce-98ca-c3e0c8bb4844)
+![Image](https://github.com/user-attachments/assets/f507268c-a690-4cd8-90c3-362b0aab383e)
+![Image](https://github.com/user-attachments/assets/ebd90d71-fbda-4634-8964-b5fe846dcccb)
+![Image](https://github.com/user-attachments/assets/4f777fa1-7dfe-4cea-96c6-836a89bfcc71)
+<img width="1200" height="900" alt="Image" src="https://github.com/user-attachments/assets/871ef152-0772-4265-b78e-248883d5409f" />
+![Image](https://github.com/user-attachments/assets/c39aa1f3-c8b0-4e22-812a-c6dbca44d784)
+![Image](https://github.com/user-attachments/assets/6b5d20f7-ee5f-4246-b949-350071ee311d)
 
 ## 🚀 Getting Started
 
