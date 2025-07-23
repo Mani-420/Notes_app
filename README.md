@@ -215,34 +215,13 @@ The application is fully responsive and optimized for:
 - Mobile phones
 - Different screen orientations
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Developer
 
-**Mani Ahmad**
+**Abdul Rehman Tahir**
 
 - GitHub: [@Mani-420](https://github.com/Mani-420)
-- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
-
-## 🙏 Acknowledgments
-
-- [React Documentation](https://reactjs.org/)
-- [Express.js Documentation](https://expressjs.com/)
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
+- LinkedIn: [[Your LinkedIn Profile](https://linkedin.com/in/your-profile)](https://www.linkedin.com/in/abdul-rehman-7068aa315/)
 
 ---
 
